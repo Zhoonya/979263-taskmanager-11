@@ -19,7 +19,7 @@ const createColorsMarkup = (colors, currentColor) => {
           ${currentColor === color ? `checked` : ``}
         />
         <label
-          for="color-${color}--${index}"
+          for="color-${color}-${index}"
           class="card__color card__color--${color}"
           >${color}</label
         >
@@ -50,8 +50,8 @@ const createRepeatingDaysMarkup = (days, repeatingDays) => {
 };
 
 const createTaskEditTemplate = (task, options = {}) => {
-  const {description, dueDate, color} = task;
-  const {isDateShowing, isRepeatingTask, activeRepeatingDays} = options;
+  const {description, dueDate} = task;
+  const {isDateShowing, isRepeatingTask, activeRepeatingDays, color} = options;
 
   const isExpired = dueDate instanceof Date && dueDate < Date.now();
   const isBlockSaveButton = (isDateShowing && isRepeatingTask) ||
@@ -143,6 +143,7 @@ export default class TaskEdit extends AbstractSmartComponent {
     this._isDateShowing = !!task.dueDate;
     this._isRepeatingTask = Object.values(task.repeatingDays).some(Boolean);
     this._activeRepeatingDays = Object.assign({}, task.repeatingDays);
+    this._color = task.color;
     this._submitHandler = null;
 
     this._subscribeOnEvents();
@@ -153,6 +154,7 @@ export default class TaskEdit extends AbstractSmartComponent {
       isDateShowing: this._isDateShowing,
       isRepeatingTask: this._isRepeatingTask,
       activeRepeatingDays: this._activeRepeatingDays,
+      color: this._color,
     });
   }
 
@@ -171,6 +173,7 @@ export default class TaskEdit extends AbstractSmartComponent {
     this._isDateShowing = !!task.dueDate;
     this._isRepeatingTask = Object.values(task.repeatingDays).some(Boolean);
     this._activeRepeatingDays = Object.assign({}, task.repeatingDays);
+    this._color = task.color;
 
     this.rerender();
   }
@@ -207,5 +210,13 @@ export default class TaskEdit extends AbstractSmartComponent {
         this.rerender();
       });
     }
+
+    const colors = element.querySelectorAll(`.card__color`);
+    colors.forEach((item) => {
+      item.addEventListener(`click`, (evt) => {
+        this._color = evt.target.textContent;
+        this.rerender();
+      });
+    });
   }
 }
