@@ -92,9 +92,9 @@ export default class BoardController {
       this._showingTasksCount = this._showingTasksCount + SHOWING_TASKS_COUNT_BY_BUTTON;
 
       const sortedTasks = getSortedTasks(this._tasks, this._sortComponent.getSortType(), prevTasksCount, this._showingTasksCount);
-      const newTasks = renderTasks(taskListElement, sortedTasks, this._onViewChange);
+      const newTasks = renderTasks(taskListElement, sortedTasks, this._onDataChange, this._onViewChange);
 
-      this._showedTaskControllers = this._showedTaskControllers.concat(newTasks, this._onDataChange);
+      this._showedTaskControllers = this._showedTaskControllers.concat(newTasks);
 
       if (this._showingTasksCount >= this._tasks.length) {
         remove(this._loadMoreButtonComponent);
