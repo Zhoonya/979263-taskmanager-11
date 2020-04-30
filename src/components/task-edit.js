@@ -205,7 +205,7 @@ export default class TaskEdit extends AbstractSmartComponent {
         altFormat: `d F H:i`,
         allowInput: true,
         enableTime: true,
-        time_24hr: true,
+        [`time_24hr`]: true,
         dateFormat: `d F H:i`,
         defaultDate: this._task.dueDate || `today`,
       });
