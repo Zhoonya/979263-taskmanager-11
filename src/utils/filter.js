@@ -51,6 +51,5 @@ export const getTasksByFilter = (tasks, filterType) => {
     case FilterType.TODAY:
       return getTasksInOneDay(getNotArchiveTasks(tasks), nowDate);
   }
-
   return tasks;
 };

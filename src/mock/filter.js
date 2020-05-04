@@ -3,9 +3,10 @@ const filterNames = [`all`, `overdue`, `today`, `favorites`, `repeating`, `archi
 export const generateFilters = () => {
   return filterNames.map((it) => {
     return {
-      title: it,
+      name: it,
       count: Math.floor(Math.random() * 10)
     };
   });
 };
+
 

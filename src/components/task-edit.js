@@ -11,7 +11,6 @@ const MAX_DESCRIPTION_LENGTH = 140;
 
 const isAllowableDescriptionLength = (description) => {
   const length = description.length;
-
   return length >= MIN_DESCRIPTION_LENGTH &&
     length <= MAX_DESCRIPTION_LENGTH;
 };
@@ -65,11 +64,10 @@ const createTaskEditTemplate = (task, options = {}) => {
 
   const description = encode(currentDescription);
 
-
   const isExpired = dueDate instanceof Date && isOverdueDate(dueDate, new Date());
   const isBlockSaveButton = (isDateShowing && isRepeatingTask) ||
     (isRepeatingTask && !isRepeating(activeRepeatingDays)) ||
-    !isAllowableDescriptionLength(description);
+    !isAllowableDescriptionLength(currentDescription);
 
   const date = (isDateShowing && dueDate) ? formatDate(dueDate) : ``;
   const time = (isDateShowing && dueDate) ? formatTime(dueDate) : ``;
@@ -263,7 +261,7 @@ export default class TaskEdit extends AbstractSmartComponent {
         allowInput: true,
         enableTime: true,
         [`time_24hr`]: true,
-        dateFormat: `d F H:i`,
+        dateFormat: `d F Y H:i`,
         defaultDate: this._task.dueDate || `today`,
       });
     }
